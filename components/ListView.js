@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Card } from 'native-base';
-import TodoModel from './TodoModel';
+import { connect } from 'react-redux';
 import OmniBox from './OmniBox';
 import SortableListView from 'react-native-sortable-listview';
 import ListViewItem from './ListViewItem';
 import Utils from './Utils';
-
-let dataList = [
-    new TodoModel('Busque uma tarefa ou pressione ✔ para adicioná-la à lista'),
-    new TodoModel('Clique na caixa para concluir uma tarefa'),
-    new TodoModel('Pressione por um segundo e arraste para mover uma tarefa'),
-];
-
-var dataListOrder = getOrder(dataList);
+import { setList, setListOrder } from '../redux/actions/todoActions';
 
 function getOrder(list) {
     return Object.keys(list);
 }
 
 function moveOrderItem(listView, fromIndex, toIndex) {
-    Utils.move(dataListOrder, parseInt(fromIndex), parseInt(toIndex));
+    Utils.move(listView.props.dataListOrder, parseInt(fromIndex), parseInt(toIndex));
     if (listView.forceUpdate) listView.forceUpdate();
+    listView.props.reduxSetList(listView.state.dataList);
+    listView.props.reduxSetListOrder(listView.state.dataListOrder);
 }
 
 class ListView extends Component {
@@ -30,20 +25,21 @@ class ListView extends Component {
         this.updateDataList = this.updateDataList.bind(this);
         this._onCompletedChange = this._onCompletedChange.bind(this);
         this.state = {
-            dataList: dataList
+            dataList: this.props.dataList,
+            dataListOrder: this.props.dataListOrder,
         }
     }
 
     updateDataList(dataList) {
-        dataListOrder = getOrder(dataList);
         this.setState({
-            dataList: dataList
+            dataList: dataList,
+            dataListOrder: getOrder(dataList),
         });
     }
 
     _onCompletedChange(dataItem, index) {
-        let fromIndex = dataListOrder.indexOf(index);
-        let toIndex = dataItem.completed ? dataListOrder.length - 1 : 0;
+        let fromIndex = this.state.dataListOrder.indexOf(index);
+        let toIndex = dataItem.completed ? this.state.dataListOrder.length - 1 : 0;
         moveOrderItem(this, fromIndex, toIndex);
     }
 
@@ -55,7 +51,7 @@ class ListView extends Component {
                     ref='listView'
                     style={{ flex: 1 }}
                     data={this.state.dataList}
-                    order={dataListOrder}
+                    order={this.state.dataListOrder}
                     onRowMoved={e => moveOrderItem(this, e.from, e.to)}
                     renderRow={(dataItem, section, index) => <ListViewItem data={dataItem} dataIndex={index} onCompletedChange={this._onCompletedChange} />}
                 />
@@ -77,7 +73,7 @@ class ListView extends Component {
                 </Header>
                 <Content>
                     <OmniBox
-                        data={dataList}
+                        data={this.props.dataList}
                         updateDataList={this.updateDataList} />
                     <Card>
                         {listView}
@@ -88,4 +84,22 @@ class ListView extends Component {
     }
 }
 
-module.exports = ListView;
+// Map State To Props (Redux Store Passes State To Component)
+const mapStateToProps = (state) => {
+    // Redux Store --> Component
+    return {
+        dataList: state.todoReducer.todoList,
+        dataListOrder: state.todoReducer.todoListOrder,
+    };
+};
+// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
+const mapDispatchToProps = (dispatch) => {
+    // Action
+    return {
+        // Set List
+        reduxSetList: (dataList) => dispatch(setList(dataList)),
+        reduxSetListOrder: (dataListOrder) => dispatch(setListOrder(dataListOrder)),
+    };
+};
+// Exports
+module.exports = connect(mapStateToProps, mapDispatchToProps)(ListView);

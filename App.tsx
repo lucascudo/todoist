@@ -3,7 +3,12 @@ import { AppLoading } from 'expo';
 import { Container, Text } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-import ListView from './src/ListView';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import ListView from './components/ListView';
+
+// Imports: Redux Persist Persister
+import { store, persistor } from './redux/store/store';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -28,9 +33,13 @@ export default class App extends React.Component {
     }
 
     return (
-      <Container>
-        <ListView></ListView>
-      </Container>
+      <Provider store={store}>
+        <PersistGate loading={!this.state.isReady} persistor={persistor}>
+          <Container>
+            <ListView></ListView>
+          </Container>
+        </PersistGate>
+      </Provider>
     );
   }
 }
