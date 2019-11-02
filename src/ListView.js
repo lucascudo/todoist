@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { View } from 'react-native';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Card } from 'native-base';
 import TodoModel from './TodoModel';
 import OmniBox from './OmniBox';
 import SortableListView from 'react-native-sortable-listview';
@@ -62,13 +63,28 @@ class ListView extends Component {
         }
 
         return (
-            <View style={{ flex: 1, marginLeft: 10, marginRight: 10 }}>
-                <OmniBox
-                    data={dataList}
-                    updateDataList={this.updateDataList} />
-                {listView}
-            </View>
-        )
+            <Container>
+                <Header>
+                    <Left>
+                        <Button transparent>
+                        <Icon name='list' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Todoist</Title>
+                    </Body>
+                    <Right />
+                </Header>
+                <Content>
+                    <OmniBox
+                        data={dataList}
+                        updateDataList={this.updateDataList} />
+                    <Card>
+                        {listView}
+                    </Card>
+                </Content>
+            </Container>
+        );
     }
 }
 
