@@ -7,12 +7,9 @@ import ListViewItem from './ListViewItem';
 import Utils from './Utils';
 
 let dataList = [
-    new TodoModel('Hello Koding'),
-    new TodoModel('Make a Todo App with React Native'),
-    new TodoModel('Check to complete a todo'),
-    new TodoModel('Long press, drag and drop a todo to sort'),
-    new TodoModel('Save data with Realm'),
-    new TodoModel('Sync data with Firebase')
+    new TodoModel('Escreva uma nova tarefa e pressione ✔ ou [ENTER] em seguida para adicioná-la à lista'),
+    new TodoModel('Clique na caixa para concluir uma tarefa'),
+    new TodoModel('Pressione por um segundo e arraste para mover uma tarefa'),
 ];
 
 var dataListOrder = getOrder(dataList);

@@ -63,7 +63,7 @@ class OmniBox extends Component {
     render() {
         return (
             <TextInput style={{ height: 36, padding: 4, marginBottom: 0, fontSize: 16, borderWidth: 1, borderColor: '#eee', borderRadius: 8, backgroundColor: '#fff' }}
-                placeholder='Adcione ou pesquise por um todo'
+                placeholder='Digite para pesquisar e pressione ✔ ou [ENTER] para criar uma tarefa'
                 blurOnSubmit={false}
                 value={this.state.newValue}
                 onKeyPress={this.onKeyPress}
