@@ -6,6 +6,7 @@ import Utils from './Utils';
 class OmniBox extends Component {
     constructor(props) {
         super(props);
+        this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onKeyPress = this.onKeyPress.bind(this);
     }
@@ -28,37 +29,46 @@ class OmniBox extends Component {
 
     onKeyPress(event) {
         if (event.nativeEvent.key == 'Enter' && this.state.newValue) {
-            var newDataItem = new TodoModel(this.state.newValue);
+            this.addNewValue();
+        }
+    }
 
-            var dataList = this.props.data;
-            var dataItem = Utils.findTodo(newDataItem, dataList);
-            if (dataItem) {
-                Utils.move(dataList, (dataList.indexOf(dataItem)), 0);
+    onSubmit() {
+        if (this.state.newValue) {
+            this.addNewValue();
+        }
+    }
 
-                this.setState({
-                    newValue: ''
-                });
-                this.props.updateDataList(dataList);
-                return;
-            }
-
-            dataList.unshift(newDataItem);
-
+    addNewValue() {
+        var newDataItem = new TodoModel(this.state.newValue);
+        var dataList = this.props.data;
+        var dataItem = Utils.findTodo(newDataItem, dataList);
+        if (dataItem) {
+            Utils.move(dataList, (dataList.indexOf(dataItem)), 0);
             this.setState({
                 newValue: ''
             });
             this.props.updateDataList(dataList);
+            return;
         }
+
+        dataList.unshift(newDataItem);
+
+        this.setState({
+            newValue: ''
+        });
+        this.props.updateDataList(dataList);
     }
 
     render() {
         return (
             <TextInput style={{ height: 36, padding: 4, marginBottom: 0, fontSize: 16, borderWidth: 1, borderColor: '#eee', borderRadius: 8, backgroundColor: '#fff' }}
-                placeholder='Add a todo or Search'
+                placeholder='Adcione ou pesquise por um todo'
                 blurOnSubmit={false}
                 value={this.state.newValue}
                 onKeyPress={this.onKeyPress}
-                onChange={this.onChange}>
+                onChange={this.onChange}
+                onSubmitEditing={this.onSubmit}>
             </TextInput>
         );
     }
