@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight } from 'react-native';
 import { Left, CardItem, Text } from 'native-base';
-import CheckBox from './CheckBox';
+import MyCheckBox from './MyCheckBox';
 
 class ListViewItem extends Component {
     constructor(props) {
@@ -36,8 +36,8 @@ class ListViewItem extends Component {
             <TouchableHighlight {...this.props.sortHandlers}>
                 <CardItem>
                     <Left>
-                        <CheckBox data={data} color={color} onCheckBoxPressed={this._onCheckBoxPressed} checked={data.completed}></CheckBox>
-                        <Text style={{ fontSize: 18, color: color, textDecorationLine: textDecorationLine }}>{data.title}</Text>
+                        <MyCheckBox data={data} color={color} onCheckBoxPressed={this._onCheckBoxPressed} checked={data.completed} />
+                        <Text style={{ textDecorationLine: textDecorationLine, color: color }}>{data.title}</Text>
                     </Left>
                 </CardItem>
             </TouchableHighlight>

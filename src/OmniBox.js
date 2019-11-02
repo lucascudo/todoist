@@ -63,7 +63,7 @@ class OmniBox extends Component {
     render() {
         return (
             <Input
-                placeholder='Pesquise ou adicione uma tarefa pressionando ✔'
+                placeholder='Pesquise ou adicione uma tarefa'
                 blurOnSubmit={false}
                 value={this.state.newValue}
                 onKeyPress={this.onKeyPress}

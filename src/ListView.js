@@ -8,7 +8,7 @@ import ListViewItem from './ListViewItem';
 import Utils from './Utils';
 
 let dataList = [
-    new TodoModel('Escreva uma nova tarefa e pressione ✔ ou [ENTER] em seguida para adicioná-la à lista'),
+    new TodoModel('Busque uma tarefa ou pressione ✔ para adicioná-la à lista'),
     new TodoModel('Clique na caixa para concluir uma tarefa'),
     new TodoModel('Pressione por um segundo e arraste para mover uma tarefa'),
 ];
@@ -67,7 +67,7 @@ class ListView extends Component {
                 <Header>
                     <Left>
                         <Button transparent>
-                        <Icon name='list' />
+                        <Icon name='menu' />
                         </Button>
                     </Left>
                     <Body>
