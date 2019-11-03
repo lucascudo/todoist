@@ -1,11 +1,12 @@
 import React from 'react';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
+import { Container, Header, Left, Button, Icon, Title, Body, Right } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import ListView from './components/ListView';
+import LoginView from './components/LoginView';
+
 
 // Imports: Redux Persist Persister
 import { store, persistor } from './redux/store/store';
@@ -36,7 +37,18 @@ export default class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={!this.state.isReady} persistor={persistor}>
           <Container>
-            <ListView></ListView>
+            <Header>
+                <Left>
+                    <Button transparent>
+                    <Icon name='menu' />
+                    </Button>
+                </Left>
+                <Body>
+                    <Title>Todoist</Title>
+                </Body>
+                <Right />
+            </Header>
+            <LoginView></LoginView>
           </Container>
         </PersistGate>
       </Provider>

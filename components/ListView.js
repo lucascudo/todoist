@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Card } from 'native-base';
+import { Content, Card } from 'native-base';
 import { connect } from 'react-redux';
 import OmniBox from './OmniBox';
 import SortableListView from 'react-native-sortable-listview';
@@ -59,27 +59,14 @@ class ListView extends Component {
         }
 
         return (
-            <Container>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                        <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Todoist</Title>
-                    </Body>
-                    <Right />
-                </Header>
-                <Content>
-                    <OmniBox
-                        data={this.props.dataList}
-                        updateDataList={this.updateDataList} />
-                    <Card>
-                        {listView}
-                    </Card>
-                </Content>
-            </Container>
+            <Content>
+                <OmniBox
+                    data={this.props.dataList}
+                    updateDataList={this.updateDataList} />
+                <Card>
+                    {listView}
+                </Card>
+            </Content>
         );
     }
 }

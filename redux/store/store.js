@@ -1,26 +1,32 @@
 // Imports: Dependencies
 import { AsyncStorage } from 'react-native';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 // Imports: Redux
-import rootReducer from '../reducers/index';
-// Middleware: Redux Persist Config
-const persistConfig = {
-  // Root
+import authReducer from '../reducers/authReducer';
+import todoReducer from '../reducers/todoReducer';
+
+const rootPersistConfig = {
   key: 'root',
-  // Storage Method (React Native)
   storage: AsyncStorage,
-  // Whitelist (Save Specific Reducers)
-  whitelist: [
-    'authReducer',
-    'todoReducer',
-  ],
-  // Blacklist (Don't Save Specific Reducers)
-  blacklist: [],
-};
+  whitelist: ['todoReducer'],
+}
+
+const authPersistConfig = {
+  key: 'authReducer',
+  storage: AsyncStorage,
+  whitelist: ['password'],
+  blacklist: ['loggedIn'],
+}
+
+const rootReducer = combineReducers({
+  authReducer: persistReducer(authPersistConfig, authReducer),
+  todoReducer: todoReducer,
+})
+
 // Middleware: Redux Persist Persisted Reducer
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 // Redux: Store
 const store = createStore(
   persistedReducer,
