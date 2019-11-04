@@ -30,11 +30,15 @@ class ListView extends Component {
         }
     }
 
-    updateDataList(dataList) {
+    updateDataList(dataList, persist = false) {
         this.setState({
             dataList: dataList,
             dataListOrder: getOrder(dataList),
         });
+        if (persist) {
+            this.props.reduxSetList(this.state.dataList);
+            this.props.reduxSetListOrder(this.state.dataListOrder);
+        }
     }
 
     _onCompletedChange(dataItem, index) {

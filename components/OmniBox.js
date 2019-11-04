@@ -48,7 +48,7 @@ class OmniBox extends Component {
             this.setState({
                 newValue: ''
             });
-            this.props.updateDataList(dataList);
+            this.props.updateDataList(dataList, true);
             return;
         }
 
@@ -57,7 +57,7 @@ class OmniBox extends Component {
         this.setState({
             newValue: ''
         });
-        this.props.updateDataList(dataList);
+        this.props.updateDataList(dataList, true);
     }
 
     render() {
